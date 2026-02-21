@@ -21,7 +21,7 @@ sub _process_directive {
     my $self = shift;
     my $directive = shift;
 
-    my ($command, $opts, $args) = $directive =~ /\A(\w+)\s*([^:]*)\s*:\s*(.+)\z/
+    my ($command, $opts, $args) = $directive =~ /\A(\w+)\s*([^:]*)\s*:\s*(.+)\z/s
         or die "Invalid directive syntax '$directive', please use COMMAND[OPTIONS]: ...";
     #use DD; dd {command=>$command, opts=>$opts, args=>$args};
     if ($command eq 'comment') {
