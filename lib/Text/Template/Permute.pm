@@ -4,7 +4,7 @@ use 5.010001;
 use strict;
 use warnings;
 
-use Set::CrossProduct;
+use Permute::Unnamed ();
 
 # AUTHORITY
 # DATE
@@ -112,10 +112,7 @@ sub process {
     # generate the permutations of args
     $self->{_permute_items} = [];
     if (@{ $self->{_permute_args} }) {
-        my $cross = Set::CrossProduct->new($self->{_permute_args});
-        while (my $item = $cross->get) {
-            push @{ $self->{_permute_items} }, $item;
-        }
+        $self->{_permute_items} = Permute::Unnamed::permute_unnamed(@{ $self->{_permute_args} });
     } else {
         push @{ $self->{_permute_items} }, [];
     }
