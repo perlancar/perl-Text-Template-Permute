@@ -1,3 +1,11 @@
+0.002   2026-02-21  Released-By: PERLANCAR; Urgency: medium
+
+        - Replace Set::CrossProduct with Permute::Unnamed because
+          Set::CrossProduct requires at least 2 args.
+
+        - Add test.
+
+
 0.001   2026-02-21  Released-By: PERLANCAR
 
         - First, early release.
