@@ -27,11 +27,13 @@ sub _process_directive {
     if ($command eq 'comment') {
         return ();
     } elsif ($command eq 'permute') {
+        $args =~ s!/\*.*?\*/!!g;
         my @items = split /\|/, $args;
         push @{ $self->{_permute_args} }, \@items;
         my $i = $self->{_permute_idx}++;
         return (sub { $self->{_permute_items}[$_[0]][$i] });
     } elsif ($command eq 'pick') {
+        $args =~ s!/\*.*?\*/!!g;
         my @choices = split /\|/, $args;
        if ($opts eq 'once') {
            return ($choices[rand @choices]);
@@ -153,6 +155,49 @@ sub process {
 
 
 =head1 DESCRIPTION
+
+This module can produce an array of permuted text from a single template. A
+template is text which contains zero or more directives in the form of:
+
+ {{COMMAND[ OPTIONS ]:[ARGS]}}
+
+Known commands:
+
+=over
+
+=item * comment
+
+Directives will be ignored and regarded as an empty string.
+
+=item * permute
+
+Permute the text items separated by C<|>.
+
+Comment in the form of C</* ... */> is allowed which will be removed first
+before splitting the items.
+
+Example:
+
+ Good {{permute: morning|afternoon|night}}, Mr Smith!
+ It is {{permute: so nice|very nice}} to meet you.
+
+=item * pick
+
+Available option: C<once>.
+
+Pick one of alternative text separated by C<|>.
+
+Comment in the form of C</* ... */> is allowed which will be removed first
+before splitting the alternatives.
+
+Example:
+
+ Hello, {{pick: Mr|Mrs}} Smith!
+
+The C<once> option makes the alternative picked once and will be the same in all
+permutations.
+
+=back
 
 
 =head1 SEE ALSO
